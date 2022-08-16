@@ -8,7 +8,7 @@ import Style from './Styles/style'
 export default function App() {
   return (
     <View style={[styles.container, Style.border, Style.background, Style.flex]}>
-      <View><Nav local='Começo da página' /></View>
+      <View><Nav local='Início da página' /></View>
 
       <View style={styles.borda}>
         <Image
