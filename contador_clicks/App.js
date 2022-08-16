@@ -1,18 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native'
+import Style from './style/general'
+import Cont from './components/contadores'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Teste</Text>
+    <View style={Style.container}>
+      <Text style={Style.title}>Contador de Clikes</Text>
+      <Cont/>
+
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
