@@ -3,17 +3,15 @@ import { StyleSheet } from "react-native"
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#121212', // cinza
-    flexDirection: 'column',
-    alignItems: "stretch",
-    justifyContent: 'center',
+    backgroundColor: '#121212',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
 
   title: {
-    textAlign:"center",
     fontSize: 40,
     marginTop: 50,
-    color: '#003466',
+    color: '#fff',
   },
 
   display: {
@@ -25,5 +23,23 @@ export default StyleSheet.create({
     color: '#000',
     textAlign: 'right',
     marginRight: 30,
-  }
+  },
+
+  diplayMargin: {
+    marginBottom: 15
+  },
+  
+  buttonWidth: {
+    width: '70%',
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  buttonMargin: {
+    marginBottom: 5
+  },
+
+  borderRadius: {
+    borderRadius: 8
+  },
 })

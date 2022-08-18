@@ -6,6 +6,7 @@ export default function App() {
   return (
     <View style={Style.container}>
       <Text style={Style.title}>Contador de Clikes</Text>
+      
       <Cont/>
 
     </View>
