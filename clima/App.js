@@ -1,35 +1,50 @@
+import { useState, useEffect } from 'react'
 import { Text, View } from 'react-native'
 import Style from './style/styles'
 
 export default function App() {
   const apiKey = 'd9441038f6b987a8e88413eea36c17c2'
+  const city = 'Maceió'
 
-  const search = async () => {
-    const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
+  const [data, setData] = useState({})
+
+  const consulta = async () => {
+    const result_consulta = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
       .then(response => { return response.json() })
 
+    setData(extract(result_consulta))
   }
 
-  const extract = (result) => {
-    const { result } = data
-    const { description, icon } = data.weather[0]
-    const { temp, feels_like, temp_min, temp_max, humidity } = data.main
-    const { visibility } = data.visibility
-    const { speed, deg } = data.wind
-    const { country, sunrise, sunset } = data.sys
-    const { timezone } = data.timezone
-    const { name } = data.name
+  const extract = (result_consulta) => {
+    const { weather, main, wind, sys, name } = result_consulta
+    const { description, icon } = weather[0]
+    const { temp, feels_like, temp_min, temp_max } = main
+    const { speed } = wind
+    const { country } = sys
 
-    return data
+    return {
+      name: name,
+      desc: description,
+      icon: icon,
+      temp: temp,
+      tmax: temp_max,
+      tmin: temp_min,
+      tsensation: feels_like,
+      wind_speed: speed,
+      sigla: country,
+    }
   }
+
+  useEffect(() => { // importante
+    consulta()
+  }, [])
 
   return (
     <View style={Style.container}>
       <View style={[Style.border, Style.container2]}>
-        <Text>{data.main}</Text>
+        <Text> oi {data.sigla} </Text>
       </View>
 
     </View>
   );
-  
 }
