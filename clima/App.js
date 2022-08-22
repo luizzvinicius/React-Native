@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, SafeAreaView, TextInput } from 'react-native'
 import Style from './style/styles'
 
 export default function App() {
   const apiKey = 'd9441038f6b987a8e88413eea36c17c2'
-  const city = 'Maceió'
-
   const [data, setData] = useState({})
+  let city = 'Maceió'
 
   const consulta = async () => {
     const result_consulta = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
@@ -40,11 +39,18 @@ export default function App() {
   }, [])
 
   return (
-    <View style={Style.container}>
+    <SafeAreaView style={Style.container}>
       <View style={[Style.border, Style.container2]}>
-        <Text> oi {data.sigla} </Text>
+        <Text> oi | {data.desc} </Text>
+        
+        <View style={Style.textInput}>
+          <Text>Digite a cidade: </Text>
+          <TextInput
+            style={{borderWidth: 1, borderColor: 'orange', width: '40%', height: 40,}}
+          />
+        </View>
+      
       </View>
-
-    </View>
+    </SafeAreaView>
   );
 }
