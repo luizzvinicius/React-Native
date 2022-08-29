@@ -2,14 +2,17 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
     flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 
   container2: {
+    height:'70%',
     width: '90%',
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor: '#00a',
   },
 
   border: {
@@ -21,7 +24,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'orange',
     width: '90%',
-    
+    flexDirection: 'row',
+    alignItems: 'center'
   },
 
 })

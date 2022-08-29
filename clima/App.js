@@ -39,18 +39,26 @@ export default function App() {
   }, [])
 
   return (
-    <SafeAreaView style={Style.container}>
+    <SafeAreaView style={[Style.container, Style.border]}>
+      <Text>{data.name}, {data.sigla} </Text>
+
       <View style={[Style.border, Style.container2]}>
-        <Text> oi | {data.desc} </Text>
+        <Text>{data.icon}</Text>
         
-        <View style={Style.textInput}>
+        <Text>{data.desc} DATA AQUI</Text>
+        
+        <Text>{data.temp}</Text>
+
+        <View style={[Style.textInput, Style.border]}>
           <Text>Digite a cidade: </Text>
           <TextInput
-            style={{borderWidth: 1, borderColor: 'orange', width: '40%', height: 40,}}
+            style={Style.border}
           />
         </View>
       
       </View>
+
+      <Text>Carroça</Text>
     </SafeAreaView>
   );
 }
