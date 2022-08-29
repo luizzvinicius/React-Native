@@ -34,6 +34,10 @@ export default function App() {
     }
   }
 
+  const getIcon = (codIcon) => {
+    return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
+  }
+
   useEffect(() => { // importante
     consulta()
   }, [])
