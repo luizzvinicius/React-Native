@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, TextInput } from 'react-native'
+import { Text, View, SafeAreaView, TextInput, Image } from 'react-native'
 import Style from './style/styles'
 
 export default function App() {
@@ -35,22 +35,29 @@ export default function App() {
   }
 
   const getIcon = (codIcon) => {
-    return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
+    return `http://openweathermap.org/img/wn/${codIcon}@2x.png` 
   }
 
   useEffect(() => { // importante
     consulta()
   }, [])
 
+  console.log(getIcon(data.icon))
   return (
     <SafeAreaView style={[Style.container, Style.border]}>
-      <Text>{data.name}, {data.sigla} </Text>
+      <Text>
+        {data.name}, {data.sigla}, {data.icon}
+      </Text>
 
       <View style={[Style.border, Style.container2]}>
-        <Text>{data.icon}</Text>
         
+        <Image
+          source={{uri: getIcon(data.icon)}}
+        />
+
+
         <Text>{data.desc} DATA AQUI</Text>
-        
+
         <Text>{data.temp}</Text>
 
         <View style={[Style.textInput, Style.border]}>
@@ -59,7 +66,7 @@ export default function App() {
             style={Style.border}
           />
         </View>
-      
+
       </View>
 
       <Text>Carroça</Text>

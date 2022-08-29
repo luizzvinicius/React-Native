@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: '90%',
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor: '#00a',
+    backgroundColor: '#add8e6',
   },
 
   border: {
