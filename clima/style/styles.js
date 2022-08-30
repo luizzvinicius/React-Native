@@ -19,13 +19,4 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: 'orange',
   },
-
-  textInput: {
-    borderWidth: 1,
-    borderColor: 'orange',
-    width: '90%',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-
 })
