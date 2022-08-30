@@ -4,8 +4,8 @@ import Style from './style/styles'
 
 export default function App() {
   const apiKey = 'd9441038f6b987a8e88413eea36c17c2'
-  const [json, setJson] = useState({})
   let city = 'Maceió'
+  const [json, setJson] = useState({})
 
   const consulta = async () => {
     const resultado_consulta = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=pt_br`)
@@ -14,33 +14,23 @@ export default function App() {
     setJson(desconstruct(resultado_consulta))
   }
 
-  // const getIcon = (codIcon) => {
-  //     return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
-  // }
-
   const getIcon = (codIcon) => {
     return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
   }
 
   const desconstruct = (resultado_consulta) => {
-    const { coord, weather, main, wind, sys, name } = resultado_consulta
+    const { coord, weather, main, sys, name } = resultado_consulta
     const { lon, lat } = coord
-    const { description, icon } = weather[0]
-    const { temp, feels_like, temp_min, temp_max } = main
-    const { speed } = wind
+    const { icon } = weather[0]
+    const { temp } = main
     const { country } = sys
 
     return {
       lat: lat,
       lon: lon,
       name: name,
-      desc: description,
       icon: icon,
       temp: temp,
-      tmax: temp_max,
-      tmin: temp_min,
-      tsensation: feels_like,
-      wind_speed: speed,
       sigla: country,
     }
   }
