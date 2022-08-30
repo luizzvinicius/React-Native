@@ -35,14 +35,13 @@ export default function App() {
   }
 
   const getIcon = (codIcon) => {
-    return `http://openweathermap.org/img/wn/${codIcon}@2x.png` 
+    return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
   }
 
   useEffect(() => { // importante
     consulta()
   }, [])
 
-  console.log(getIcon(data.icon))
   return (
     <SafeAreaView style={[Style.container, Style.border]}>
       <Text>
@@ -50,9 +49,10 @@ export default function App() {
       </Text>
 
       <View style={[Style.border, Style.container2]}>
-        
+
         <Image
-          source={{uri: getIcon(data.icon)}}
+          source={{ uri: getIcon(data.icon) }}
+          style={{ width: 60, height: 75 }}
         />
 
 
@@ -66,10 +66,9 @@ export default function App() {
             style={Style.border}
           />
         </View>
-
       </View>
 
       <Text>Carroça</Text>
     </SafeAreaView>
-  );
+  )
 }
