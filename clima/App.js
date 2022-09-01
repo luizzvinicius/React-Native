@@ -3,78 +3,84 @@ import { Text, View, SafeAreaView, Image } from 'react-native'
 import Style from './style/styles'
 
 export default function App() {
-  const city = 'Maceió'
   const apiKey = 'd9441038f6b987a8e88413eea36c17c2'
-  const [infoBasica, setJson] = useState({})
-
-  const lat = -9.6658
-  const lon = -35.7353
   const apiKey2 = '79a1dff7fd79964091d981f2cb98084f'
+
+  const city = 'Maceió'
+  const idiom = 'pt_br'
+
+  const [json1, setJson1] = useState({})
   const [json2, setJson2] = useState({})
 
-  const consulta = (city, apiKey) => {
-    const resultado_consulta = fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=pt_br`)
-      .then(response => response.json())
-      
-      
-      consulta2({lat: resultado_consulta.lat, lon: resultado_consulta.lon}, apiKey2)
-    
+  const consulta1 = async (city, apiKey, idiom) => {
+    try {
+      const response1 = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=${idiom}`)
+
+      const result_consulta1 = await response1.json()
+      const dados_json1 = desconstruct1(result_consulta1)
+      setJson1(dados_json1)
+
+      consulta2(dados_json1.lat, dados_json1.lon, apiKey2)
+
+    } catch (error) {
+      console.log('Verifique a cidade')
+    }
   }
 
-  // const desconstruct = (resultado_consulta) => {
-  //   const { coord, weather, main, sys, name } = resultado_consulta
-  //   const { lon, lat } = coord
-  //   const { icon } = weather[0]
-  //   const { temp } = main
-  //   const { country } = sys
+  const desconstruct1 = (result_consulta1) => {
+    const { coord, sys, name } = result_consulta1
+    const { lon, lat } = coord
+    const { country } = sys
 
-  //   return {
-  //     lat: lat,
-  //     lon: lon,
-  //     name: name,
-  //     icon: icon,
-  //     temp: temp,
-  //     sigla: country,
-  //   }
-  // }
-
-  const consulta2 = (lat, lon, apiKey2) => {
-    const resultado_consulta2 = fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey2}&units=metric&lang=pt_br`)
-      .then(response => response.json())
-    
-    setJson2(desconstruct2(resultado_consulta2))
+    return {
+      lat: lat,
+      lon: lon,
+      name: name,
+      sigla: country,
+    }
   }
 
-  const desconstruct2 = (resultado_consulta2) => {
-    const { list } = resultado_consulta2
+  const consulta2 = async (lat, lon, apiKey2) => {
+    try {
+      const response2 = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey2}&cnt=5&units=metric`)
+
+      const result_consulta2 = await response2.json()
+      setJson2(desconstruct2(result_consulta2))
+
+    } catch (error) {
+      console.log('Erro: ' + error)
+    }
+  }
+
+  const desconstruct2 = (result_consulta2) => {
+    const { list } = result_consulta2
     const { dt_txt } = list[0]
 
     return {
       data: dt_txt,
     }
   }
-  
-  // useEffect(() => { consulta2() })
 
-  // const getIcon = (codIcon) => {
-  //   return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
-  // }
+  const getIcon = (codIcon) => {
+    return `http://openweathermap.org/img/wn/${codIcon}@2x.png`
+  }
 
-  useEffect(() => { consulta(city, apiKey) })
+  useEffect(() => { consulta1(city, apiKey, idiom) }, [])
 
   return (
     <SafeAreaView style={[Style.container, Style.border]}>
-      <Text>Latidude = {} Longitude = {infoBasica.lon} {infoBasica.name}, {infoBasica.sigla}</Text>
+
+      <Text>Latidude = {json1.lat} Longitude = {json1.lon} {json1.name}, {json1.sigla}</Text>
 
       <View style={[Style.border, Style.container2]}>
 
         {/* <Image
-          source={{ uri: getIcon(infoBasica.icon) }}
+          source={{ uri: getIcon(json1.icon) }}
           style={{ width: 60, height: 75 }}
         /> */}
 
         <Text>{json2.data}</Text>
-        
+
       </View>
 
       <Text>Carroça</Text>
