@@ -54,9 +54,18 @@ export default function App() {
 
   const desconstruct2 = (result_consulta2) => {
     const { list } = result_consulta2
-    const { dt_txt } = list[0]
+    const { main, weather, wind, dt_txt } = list[0]
+    const { temp, feels_like, temp_min, temp_max } = main
+    const { description } = weather
+    const { speed } = wind
 
     return {
+      temp: temp,
+      sensation: feels_like,
+      tmin: temp_min,
+      tmax: temp_max,
+      description: description,
+      speed: speed,
       data: dt_txt,
     }
   }
@@ -80,6 +89,7 @@ export default function App() {
         /> */}
 
         <Text>{json2.data}</Text>
+        <Text> {} </Text>
 
       </View>
 
