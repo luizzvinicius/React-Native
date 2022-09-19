@@ -1,6 +1,6 @@
 import { SafeAreaView, Text, View } from 'react-native'
 import Style from './style/general'
-import Semaforo from './components/Semaforo'
+
 import Cont from './components/contadores'
 
 export default function App() {
@@ -12,7 +12,6 @@ export default function App() {
       
       <Cont/>
 
-      <Semaforo/>
     </View>
 
     </SafeAreaView>

@@ -42,21 +42,4 @@ export default StyleSheet.create({
   borderRadius: {
     borderRadius: 8
   },
-
-  SemaforoContainer: {
-    borderWidth: 1,
-    borderColor: '#fff',
-    padding: 15,
-    gap: 10,
-    borderRadius: 8,
-    
-  },
-
-  luz: {
-    width: 70,
-    height: 70,
-    borderRadius: 140,
-    borderWidth: 2,
-    borderColor: '#fff'
-  },
 })
