@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 export default function Carta ({color, status, click, card }) {
 
