@@ -1,19 +1,12 @@
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
-export default function Carta({ color, status, click, card }) {
-
-    const verificaStatus = (status) => {
-        switch (status) {
-            case 0: return { background: '#6C809A' }
-            case 1: return { background: color }
-            case 2: return { background: color, opacity: 0.5 }
-            default: break
-        }        
-    }
+export default function Carta({ id, color, carta, pressionada, setPressionada, status, setStatus, clicadas }) {
 
     return (
-        <TouchableOpacity style={[styles.carta_container, verificaStatus(status)]} onPress={status === 0 ? () => click(card) : () => ''}>
-            <Image />
+        <TouchableOpacity
+            style={[styles.carta_container, id == pressionada ? {background: color} : {background: '#6C809A'} ]}
+            onPress={() => {setPressionada(id), clicadas.push(carta)}}>
+            
         </TouchableOpacity>
     )
 }

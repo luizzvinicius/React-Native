@@ -1,59 +1,34 @@
 import { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Carta from './Carta'
 
 export default function Tabuleiro() {
-
     const [cartas, setCartas] = useState([
-        { status: 0, color: '#FFF7AE' },
-        { status: 0, color: '#8B5FBF' },
-        { status: 0, color: '#E3879E' },
-        { status: 0, color: '#FEC0CE' },
+        { id: 1, color: '#FFF7AE' },
+        { id: 2, color: '#FFF7AE' },
+        { id: 3, color: '#8B5FBF' },
+        { id: 4, color: '#8B5FBF' },
+        { id: 5, color: '#E3879E' },
+        { id: 6, color: '#E3879E' },
+        { id: 7, color: '#FEC0CE' },
+        { id: 8, color: '#FEC0CE' }
     ])
 
-    const [transition, setTransition] = useState([])
-
-    const openCard = (carta) => {
-        const array = [...transition]
-        if (!array.includes(carta)) {
-            array.push(carta)
-            setTransition(array)
-        }
-
-        if (array.length === 2) {
-            if (array[0].color === array[1].color) {
-                array[0].status = 2
-                array[1].status = 2
-
-                verificaCartas(array)
-            }
-        }
-    }
-
-    const verificaCartas = (array) => {
-
-        const oldCards = [...cartas]
-
-        oldCards.map((carta) => {
-            if (carta.color == array[0].color) {
-                oldCards.pop(carta)
-                oldCards.push(array[0])
-            }
-
-            if (carta.color == array[1].color) {
-                oldCards.pop(carta)
-                oldCards.push(array[1])
-            }
-
-            setCartas(oldCards)
-        })
-    }
+    const [pressionada, setPressionada] = useState(0)
+    const [status, setStatus] = useState(0)
+    const [clicadas, setClicadas] = useState([])
 
     return (
         <View style={styles.tabuleiro_container}>
-            {cartas.map((carta) =>
-                <Carta color={carta.color} status={carta.status} click={openCard} card={carta} />
-            )}
+            {
+                cartas.map(carta =>
+                    <Carta key={carta.id} id={carta.id} color={carta.color} carta={carta} pressionada={pressionada} setPressionada={setPressionada} status={status} setStatus={setStatus} clicadas={clicadas} />
+                )
+                
+            }
+            
+
+            <View><Text>{console.log(clicadas)}</Text></View> 
         </View>
     )
 }
