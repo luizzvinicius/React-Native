@@ -23,7 +23,7 @@ export default function Tabuleiro() {
         if (clicadas.length == 2) {
             if (clicadas[0].color == clicadas[1].color) {
                 copiaCartas.forEach(carta => {
-                    carta.color == clicadas[0].color ? carta.desabilitada = true : false
+                    carta.color == clicadas[0].color ? carta.desabilitada = true : ''
                 })
 
                 setCartas(copiaCartas)

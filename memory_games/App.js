@@ -1,9 +1,10 @@
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import Tabuleiro from './components/Tabuleiro'
 
 export default function App() {
     return (
         <SafeAreaView style={styles.app_container}>
+            <Text>Jogo da memória</Text>
             <Tabuleiro/>
         </SafeAreaView>
     )
