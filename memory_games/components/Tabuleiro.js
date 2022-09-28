@@ -18,10 +18,10 @@ export default function Tabuleiro() {
     const [clicadas, setClicadas] = useState([])
 
     const compara = (clicadas) => {
-        const copiaCartas = [...cartas]
-
         if (clicadas.length == 2) {
             if (clicadas[0].color == clicadas[1].color) {
+                const copiaCartas = [...cartas]
+
                 copiaCartas.forEach(carta => {
                     carta.color == clicadas[0].color ? carta.desabilitada = true : ''
                 })
