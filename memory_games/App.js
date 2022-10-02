@@ -4,7 +4,8 @@ import Tabuleiro from './components/Tabuleiro'
 export default function App() {
     return (
         <SafeAreaView style={styles.app_container}>
-            <Text>Jogo da memória</Text>
+            <Text style={styles.titulo}>Memory Game</Text>
+            
             <Tabuleiro/>
         </SafeAreaView>
     )
@@ -12,10 +13,16 @@ export default function App() {
 
 const styles = StyleSheet.create({
     app_container: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#000',
-        height: '100%'
-    }
+        backgroundColor: '#202020',
+    },
+
+    titulo: {
+        fontSize: 40,
+        color: '#ffff',
+        fontWeight: 'bold',
+        marginBottom: 10
+    },
 })
