@@ -1,14 +1,19 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
 import { useState } from 'react'
 import Carta from './Carta'
-import ButtonCustom from './ButtomCustom'
+import ButtonCustom from './ButtonCustom'
+import defaultImage from '../public/image/ball.png'
+import hinata from '../public/image/hinata.png'
+import kenma from '../public/image/kenma.png'
+import noya from '../public/image/noya.png'
+import tanaka from '../public/image/tanaka.png'
 
 export default function Tabuleiro() {
     const cards = [
-        { color: '#FFF7AE', status: 0 },
-        { color: '#8B5FBF', status: 0 },
-        { color: '#E3879E', status: 0 },
-        { color: '#FEC0CE', status: 0 },
+        { image: hinata, status: 0, bgDefault: defaultImage },
+        { image: kenma, status: 0, bgDefault: defaultImage },
+        { image: noya, status: 0, bgDefault: defaultImage },
+        { image: tanaka, status: 0, bgDefault: defaultImage},
     ]
 
     const [cartas, setCartas] = useState([])
@@ -21,10 +26,10 @@ export default function Tabuleiro() {
             const copiaCartas = [...cartas]
 
             setTimeout(() => {
-                if (clicadas[0].color == clicadas[1].color) {
+                if (clicadas[0].image == clicadas[1].image) {
 
                     copiaCartas.forEach(carta => {
-                        carta.color == clicadas[0].color ? carta.status = 2 : ''
+                        carta.image == clicadas[0].image ? carta.status = 2 : ''
                     })
 
                     setScore((prev) => prev + 1)
@@ -43,9 +48,9 @@ export default function Tabuleiro() {
 
     const embaralharCartas = () => {
         const cartasEmbaralhadas = [...cards, ...cards]
-            .sort(() => Math.random() - 0.5)
-            .map((card) => ({ ...card, id: Math.random() * 10 }))
-
+        .sort( () => Math.random() - 0.5 )
+        .map( (card) =>  ({...card, id: Math.random() * 10}))
+        
         setScore(0)
         setCartas(cartasEmbaralhadas)
     }
@@ -55,19 +60,19 @@ export default function Tabuleiro() {
             <View>
                 <Text style={styles.titulo}>Score: {score}</Text>
             </View>
-
+            
             <View style={styles.container_cartas}>
                 {
                     cartas.map(carta =>
-                        <Carta key={carta.id} carta={carta} pressionada={pressionada} setPressionada={setPressionada} clicadas={clicadas} status={carta.status} />
+                        <Carta key={carta.id} carta={carta} pressionada={pressionada} setPressionada={setPressionada} clicadas={clicadas} status={carta.status} bgDefault={carta.bgDefault} />
                     )
                 }
             </View>
 
             <View>
-                <ButtonCustom embaralharCartas={embaralharCartas} />
+                <ButtonCustom embaralharCartas={embaralharCartas}/>
             </View>
-
+                
             {compara(clicadas)}
         </View>
     )
@@ -97,5 +102,12 @@ const styles = StyleSheet.create({
         color: '#ffff',
         fontWeight: 'bold',
         fontSize: 20
+    },
+
+    icon: {
+        width: 50,
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#000'
     },
 })
