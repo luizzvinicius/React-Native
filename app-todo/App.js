@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Image, TextInput } from 'react-native'
+import {NavigationContainer} from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { SafeAreaView, StyleSheet, Text, View, Image, TextInput, Button } from 'react-native'
 
-export default function App() {
+const pilha = createStackNavigator()
 
+export default function App({navigation}) {
   return (
+    // <NavigationContainer></NavigationContainer>
+    
     <SafeAreaView style={styles.container_safe}>
       <View style={styles.icon_container}>
         <Text style={styles.title}>To Do!</Text>
@@ -15,18 +20,24 @@ export default function App() {
       <View style={styles.tarefa_container}>
         <TextInput style={styles.text_input} placeholder='Digite o título da sua tarefa...' />
 
+        
+
+        <View>
+          <Image style={{ width: 30, height: 30 }}
+            source={require('../app-todo/assets/add.png')}
+          />
+        </View>
+
 
       </View>
 
-      <Text>
-        Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-      </Text>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container_safe: {
+    paddingTop: 30, // Por causa do celular
     backgroundColor: '#2592DA',
     height: '100%',
     paddingLeft: 20,
@@ -59,7 +70,8 @@ const styles = StyleSheet.create({
   text_input: {
     color: '#ffff',
     paddingLeft: 5,
+    fontSize: 20,
 
   },
-  
+
 })
