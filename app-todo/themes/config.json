@@ -1,0 +1,17 @@
+ {
+    "Default": {
+        "bgPrimary": "#ffff",
+        "primaryColor": "#AF70FF",
+        "textPrimary": "#fff",
+        "textSecondary": "#AF70FF",
+        "textTerciary": "#333333"
+    },
+
+    "Dark": {
+        "bgPrimary": "#333333",
+        "primaryColor": "#AF70FF",
+        "textPrimary": "#fff",
+        "textSecondary": "#fff",
+        "textTerciary": "#333333"
+    }
+ }
