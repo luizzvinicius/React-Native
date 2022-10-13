@@ -8,7 +8,7 @@ export default function FormScreen() {
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}>
+            <View style={styles.checkBox_text}>
                 <Checkbox
                     status={isSelected ? 'checked' : 'unchecked'}
                     onPress={() => setSelection(!isSelected)}
@@ -27,24 +27,18 @@ export default function FormScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        height: 50,
+        padding: 10,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexDirection: 'row',
         backgroundColor: '#fff',
         borderRadius: 5,
-        padding: 10,
-        height: 50,
     },
 
-    checkboxContainer: {
+    checkBox_text: {
         flexDirection: 'row',
-        marginBottom: 20,
-    },
-
-    checkbox: {
-        alignSelf: 'center',
-        backgroundColor: '#AF70FF'
+        alignItems: 'center',
     },
 
     check_text: {

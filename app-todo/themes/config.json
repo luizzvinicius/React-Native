@@ -1,4 +1,4 @@
- {
+{
     "Default": {
         "bgPrimary": "#ffff",
         "primaryColor": "#AF70FF",
@@ -6,7 +6,6 @@
         "textSecondary": "#AF70FF",
         "textTerciary": "#333333"
     },
-
     "Dark": {
         "bgPrimary": "#333333",
         "primaryColor": "#AF70FF",
@@ -14,4 +13,4 @@
         "textSecondary": "#fff",
         "textTerciary": "#333333"
     }
- }
+}
