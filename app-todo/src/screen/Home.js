@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, CheckBox } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import Task from '../components/Task'
-import Json from '../../themes/config.json'
 
 
-export default function Home({ navigation }) {
-
+export default function Home({ navigation, route }) {
+    const listaTarefas = route.params
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -20,10 +19,8 @@ export default function Home({ navigation }) {
                 <Text style={styles.txt_branco}>Tarefas</Text>
 
                 <View style={styles.container_task}>
+                    {console.log(listaTarefas)}
 
-                    <Task />
-                    <Task />
-                    <Task />
                 </View>
 
                 <TouchableOpacity style={styles.form_button} onPress={() => navigation.navigate('FormScreen')}>

@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { SafeAreaView, StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
-import Json from '../../themes/config.json'
 
 
 export default function FormScreen({ navigation }) {
+    const [listaTarefas, setlistaTarefas] = useState([]) // adicionar todas as tarefas para renderizar no Home
+
+    const [aviso, setAviso] = useState('')
     const [tarefa, setTarefa] = useState('')
+
+    useEffect(() => { setAviso('') }, [tarefa])
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -22,8 +26,24 @@ export default function FormScreen({ navigation }) {
                     value={tarefa}
                     placeholder='Título'
                 />
+                <Text style={{ color: '#fff' }}>{aviso}</Text>
 
-                <TouchableOpacity style={styles.form_button} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={styles.form_button}
+                    onPress={() => {
+                        if (tarefa.length != 0) {
+                            setTarefa(tarefa)
+                            listaTarefas.push(tarefa),
+                                navigation.goBack({ listaTarefas })
+
+                        } else {
+                            setAviso('Tarefa vazia!')
+                        }
+
+                        console.log(listaTarefas, tarefa)
+
+                    }}>
+
+
                     <Text style={styles.button_text}>Criar</Text>
                 </TouchableOpacity>
 

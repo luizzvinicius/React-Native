@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Checkbox } from 'react-native-paper';
 
-export default function FormScreen() {
+export default function Task({tarefa}) {
     const [isSelected, setSelection] = useState(false)
 
     return (
@@ -15,7 +15,7 @@ export default function FormScreen() {
                     color={'#AF70FF'}
                 />
 
-                <Text style={styles.check_text}>Tarefa de nada</Text>
+                <Text style={styles.check_text}>{tarefa}</Text>
             </View>
 
             <TouchableOpacity>
