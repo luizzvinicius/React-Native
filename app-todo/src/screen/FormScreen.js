@@ -33,7 +33,7 @@ export default function FormScreen({ navigation }) {
                         if (tarefa.length != 0) {
                             setTarefa(tarefa)
                             listaTarefas.push(tarefa),
-                                navigation.goBack({ listaTarefas })
+                                navigation.goBack({tarefas: listaTarefas })
 
                         } else {
                             setAviso('Tarefa vazia!')

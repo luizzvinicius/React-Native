@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Switch } from 'react-native'
 import Task from '../components/Task'
-
 
 export default function Home({ navigation, route }) {
     const listaTarefas = route.params
+    const [ativo, setAtivo] = useState(false)
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -16,10 +16,23 @@ export default function Home({ navigation, route }) {
             </View>
 
             <View style={styles.container}>
-                <Text style={styles.txt_branco}>Tarefas</Text>
+                <View style={styles.switch_container}>
+                    <Text style={styles.txt_branco}>Tarefas</Text>
+                    <View style={styles.switch_container2}>
+                        <Text style={styles.switch_text}>dark mode: </Text>
+                        <Switch
+                            trackColor={{ false: '#fff', true: '#fff' }}
+                            thumbColor={'#AF70FF'}
+                            ios_backgroundColor='#fff'
+                            value={ativo}
+                            onValueChange={() => !ativo}
+                        />
+                    </View>
+                </View>
 
                 <View style={styles.container_task}>
                     {console.log(listaTarefas)}
+                    {/* {listaTarefas.forEach(tarefa => <Task tarefa={tarefa} />)} */}
 
                 </View>
 
@@ -44,6 +57,22 @@ const styles = StyleSheet.create({
     logo_container: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    switch_container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+    },
+
+    switch_container2: {
+        flexDirection: 'row',
+        height: 20,
+    },
+
+    switch_text: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
 
     container: {
