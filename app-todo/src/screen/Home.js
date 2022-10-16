@@ -22,20 +22,18 @@ export default function Home({ navigation, route }) {
 
     const taskDark = (value) => {
         const novaLista = [...listaTarefas]
-        novaLista.map((tarefa) => tarefa.dark = value)
+        novaLista.map(tarefa => tarefa.dark = value)
         setlistTarefa(novaLista)
     }
 
     useEffect(() => {
         if (props != undefined) {
-
             const listaNova = [...listaTarefas]
             listaNova.push(props)
             setlistTarefa(listaNova)
 
         }
     }, [props])
-
 
     useEffect(() => taskDark(isSelected), [isSelected])
 
@@ -56,19 +54,17 @@ export default function Home({ navigation, route }) {
                         <Switch
                             trackColor={{ false: '#5d5d5d', true: '#5d5d5d' }}
                             thumbColor={isSelected ? '#AF70FF' : '#FFF'}
-
+                            ios_backgroundColor='#3e3e3e'
                             onValueChange={() => setSelection(!isSelected)}
                             value={isSelected}
                         />
-
                     </View>
                 </View>
 
                 <View style={styles.container_task}>
                     {
-                        listaTarefas.length > 0 ? listaTarefas.map((tarefa) => <Task tarefa={tarefa.tarefa} apaga={() => apagaTarefa(tarefa.tarefa)} id={tarefa.id} dark={tarefa.dark} />) : []
+                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task tarefa={tarefa.tarefa} apaga={() => apagaTarefa(tarefa.tarefa)} id={tarefa.id} dark={tarefa.dark} />) : []
                     }
-
                 </View>
 
                 <TouchableOpacity
@@ -105,7 +101,7 @@ const styles = StyleSheet.create({
     },
 
     button_container2: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
         height: 28,
     },
@@ -154,11 +150,10 @@ const styles = StyleSheet.create({
 
     container_task: {
         maxHeight: 300,
-        paddingVertical: 10,
+        paddingVertical: 15,
         marginTop: 10,
         paddingRight: 5,
         gap: 10,
         overflow: 'scroll',
-
     },
 })  

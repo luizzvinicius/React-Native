@@ -13,35 +13,36 @@ export default function FormScreen({ navigation, route }) {
 
     const geraID = (lista) => {
 
-        if(!lista) return 0
+        if (!lista) return 0
 
         let maiorIndice = 0
-        
+
         lista.map((card) => {
-            maiorIndice = Math.max(card.id, maiorIndice); 
-        }) 
+            maiorIndice = Math.max(card.id, maiorIndice);
+        })
+
         return maiorIndice + 1
     }
 
     return (
-        <SafeAreaView style={[styles.safeArea, {backgroundColor: Theme.primaryColor}]}>
-            <View style={[styles.logo_container, {backgroundColor: Theme.bgPrimary}]}>
+        <SafeAreaView style={[styles.safeArea, { backgroundColor: Theme.primaryColor }]}>
+            <View style={[styles.logo_container, { backgroundColor: Theme.bgPrimary }]}>
                 <Image style={styles.logo}
                     source={logo}
                 />
             </View>
 
             <View style={styles.form}>
-                <Text style={[styles.form_titulo, {color: Theme.bgPrimary}]}>Criar Tarefa</Text>
+                <Text style={[styles.form_titulo]}>Criar Tarefa</Text>
 
-                <TextInput style={[styles.input, {backgroundColor: Theme.bgPrimary}]}
+                <TextInput style={[styles.input, { backgroundColor: Theme.bgPrimary }]}
                     onChangeText={setTarefa}
                     value={tarefa}
                     placeholder='Título'
                 />
                 <Text style={{ color: '#fff' }}>{aviso}</Text>
 
-                <TouchableOpacity style={[styles.form_button, {borderColor: Theme.bgPrimary}]}
+                <TouchableOpacity style={[styles.form_button]}
                     onPress={() => {
                         if (tarefa.length != 0) {
                             setTarefa(tarefa), navigation.navigate('Home', {
@@ -54,7 +55,7 @@ export default function FormScreen({ navigation, route }) {
                         }
                     }}>
 
-                    <Text style={[styles.button_text, {color: Theme.bgPrimary}]}>Criar</Text>
+                    <Text style={[styles.button_text]}>Criar</Text>
                 </TouchableOpacity>
 
             </View>
