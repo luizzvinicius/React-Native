@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export default function Task({ tarefa }) {
+export default function Task({ tarefa, apaga}) {
     const [isSelected, setSelection] = useState(false)
     const [desabilitado, setDesabilitado] = useState(false)
 
@@ -21,11 +21,11 @@ export default function Task({ tarefa }) {
                     disabled={desabilitado}
                 />
 
-                <Text style={[styles.check_text, verificaSelecionado(isSelected)]}>{tarefa}</Text>
+                <Text numberOfLines={1} ellipsizeMode='clip' style={[styles.check_text, verificaSelecionado(isSelected)]}>{tarefa}</Text>
             </View>
 
             <TouchableOpacity
-                onPress={() => {setSelection(true), setDesabilitado(true)}}
+                onPress={() => {setSelection(true), setDesabilitado(true), apaga(tarefa)}}
             >
                 <MaterialIcons name='delete' size={24} color='#FF6060' />
             </TouchableOpacity>
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     container: {
         height: 50,
         padding: 10,
+        paddingRight: 13,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     },
 
     checkBox_text: {
+        width: '80%',
         flexDirection: 'row',
         alignItems: 'center',
     },

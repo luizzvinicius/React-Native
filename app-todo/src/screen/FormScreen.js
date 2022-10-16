@@ -1,40 +1,57 @@
 import { useState, useEffect } from 'react'
 import { SafeAreaView, StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
 
-export default function FormScreen({ navigation }) {
+export default function FormScreen({ navigation, route }) {
     const [aviso, setAviso] = useState('')
     const [tarefa, setTarefa] = useState('')
+    const Theme = route.params.theme
+    const lista = route.params.lista
 
     useEffect(() => { setAviso('') }, [tarefa])
 
+    const geraID = (lista) => {
+
+        if(!lista) return 0
+
+        let maiorIndice = 0
+        
+        lista.map((card) => {
+            maiorIndice = Math.max(card.id, maiorIndice); 
+        }) 
+        return maiorIndice + 1
+    }
+
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={styles.logo_container}>
+        <SafeAreaView style={[styles.safeArea, {backgroundColor: Theme.primaryColor}]}>
+            <View style={[styles.logo_container, {backgroundColor: Theme.bgPrimary}]}>
                 <Image style={styles.logo}
 
                 />
             </View>
 
             <View style={styles.form}>
-                <Text style={styles.form_titulo}>Criar Tarefa</Text>
+                <Text style={[styles.form_titulo, {color: Theme.bgPrimary}]}>Criar Tarefa</Text>
 
-                <TextInput style={styles.input}
+                <TextInput style={[styles.input, {backgroundColor: Theme.bgPrimary}]}
                     onChangeText={setTarefa}
                     value={tarefa}
                     placeholder='Título'
                 />
                 <Text style={{ color: '#fff' }}>{aviso}</Text>
 
-                <TouchableOpacity style={styles.form_button}
+                <TouchableOpacity style={[styles.form_button, {borderColor: Theme.bgPrimary}]}
                     onPress={() => {
                         if (tarefa.length != 0) {
-                            setTarefa(tarefa), navigation.navigate('Home', tarefa)
+                            setTarefa(tarefa), navigation.navigate('Home', {
+                                tarefa: tarefa,
+                                id: geraID(lista)
+                            })
                         } else {
                             setAviso('Tarefa vazia!')
                         }
                     }}>
 
-                    <Text style={styles.button_text}>Criar</Text>
+                    <Text style={[styles.button_text, {color: Theme.bgPrimary}]}>Criar</Text>
                 </TouchableOpacity>
 
             </View>
