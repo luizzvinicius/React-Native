@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Switch } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { Checkbox } from 'react-native-paper'
 import Task from '../components/Task'
 
 export default function Home({ navigation, route }) {
-    const listaTarefas = route.params
-    const [ativo, setAtivo] = useState(false)
+    const props = route.params
+    const [listaTarefas, setlistTarefa] = useState([])
+    const [isSelected, setSelection] = useState(false)
+
+    useEffect(() => { if (props != undefined) listaTarefas.push(props) }, [props])
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -16,23 +20,24 @@ export default function Home({ navigation, route }) {
             </View>
 
             <View style={styles.container}>
-                <View style={styles.switch_container}>
+                <View style={styles.button_container}>
                     <Text style={styles.txt_branco}>Tarefas</Text>
-                    <View style={styles.switch_container2}>
-                        <Text style={styles.switch_text}>dark mode: </Text>
-                        <Switch
-                            trackColor={{ false: '#fff', true: '#fff' }}
-                            thumbColor={'#AF70FF'}
-                            ios_backgroundColor='#fff'
-                            value={ativo}
-                            onValueChange={() => !ativo}
+                    <View style={styles.button_container2}>
+                        <Text style={styles.button_text}>dark mode:</Text>
+                        <Checkbox
+                            status={isSelected ? 'checked' : 'unchecked'}
+                            onPress={() => setSelection(!isSelected)}
+                            color={'#FFF'}
                         />
+
                     </View>
                 </View>
 
                 <View style={styles.container_task}>
                     {console.log(listaTarefas)}
-                    {/* {listaTarefas.forEach(tarefa => <Task tarefa={tarefa} />)} */}
+                    {
+                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task tarefa={tarefa} />) : []
+                    }
 
                 </View>
 
@@ -59,18 +64,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    switch_container: {
+    button_container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-end',
     },
 
-    switch_container2: {
+    button_container2: {
         flexDirection: 'row',
-        height: 20,
+        alignItems: 'center',
+        height: 28,
     },
 
-    switch_text: {
+    button_text: {
         color: '#fff',
         fontWeight: 'bold',
     },
@@ -115,6 +120,7 @@ const styles = StyleSheet.create({
     container_task: {
         height: 150,
         paddingVertical: 10,
+        paddingRight: 5,
         gap: 10,
         overflow: 'scroll',
     },
