@@ -5,10 +5,7 @@ export default function FormScreen({ navigation, route }) {
     const [aviso, setAviso] = useState('')
     const [tarefa, setTarefa] = useState('')
 
-    const Theme = route.params.theme
-    const lista = route.params.lista
-    const logo = route.params.logo
-    const dark = route.params.dark
+    const { theme, lista, logo, dark } = route.params
 
     useEffect(() => { setAviso('') }, [tarefa])
 
@@ -24,24 +21,24 @@ export default function FormScreen({ navigation, route }) {
     }
 
     return (
-        <SafeAreaView style={[styles.safeArea, { backgroundColor: Theme.primaryColor }]}>
-            <View style={[styles.logo_container, { backgroundColor: Theme.bgPrimary }]}>
+        <SafeAreaView style={ [styles.safeArea, { backgroundColor: theme.primaryColor }] }>
+            <View style={ [styles.logo_container, { backgroundColor: theme.bgPrimary }] }>
                 <Image style={styles.logo}
                     source={logo}
                 />
             </View>
 
             <View style={styles.form}>
-                <Text style={[styles.form_titulo, {color: Theme.bgPrimary}]}>Criar Tarefa</Text>
+                <Text style={ [styles.form_titulo, {color: theme.bgPrimary}] }>Criar Tarefa</Text>
 
-                <TextInput style={[styles.input, { backgroundColor: Theme.bgPrimary }]}
+                <TextInput style={[styles.input, { backgroundColor: theme.bgPrimary }]}
                     onChangeText={setTarefa}
                     value={tarefa}
                     placeholder='Título'
                 />
                 <Text style={{ color: '#fff' }}>{aviso}</Text>
 
-                <TouchableOpacity style={[styles.form_button, {borderColor: Theme.bgPrimary}]}
+                <TouchableOpacity style={ [styles.form_button, {borderColor: theme.bgPrimary}] }
                     onPress={() => {
                         if (tarefa.length == 0) return setAviso('Tarefa vazia!') 
                         
@@ -52,7 +49,7 @@ export default function FormScreen({ navigation, route }) {
                         })
                     }}>
 
-                    <Text style={[styles.button_text, {color: Theme.bgPrimary}]}>Criar</Text>
+                    <Text style={ [styles.button_text, {color: theme.bgPrimary}] }>Criar</Text>
                 </TouchableOpacity>
 
             </View>

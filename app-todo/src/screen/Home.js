@@ -15,14 +15,18 @@ export default function Home({ navigation, route }) {
     const Theme = isSelected ? Dark.colors : Light.colors
 
     const apagaTarefa = (id) => {
-        const novaLista = [...listaTarefas]
-        setlistTarefa(novaLista.filter( (task) => task.id != id))
+        setlistTarefa(
+            [...listaTarefas]
+            .filter( (task) => task.id != id)
+            )
     }
 
     const taskDark = (value) => {
-        const novaLista = [...listaTarefas]
-        novaLista.map(tarefa => tarefa.dark = value)
-        setlistTarefa(novaLista)
+        const ListaDark = [...listaTarefas]
+
+        ListaDark.map(tarefa => tarefa.dark = value)
+
+        setlistTarefa( ListaDark )
     }
 
 
@@ -45,17 +49,18 @@ export default function Home({ navigation, route }) {
                     resizeMode='stretch'
                 />
             </View>
-            {console.log('renderizou')}
+
             <View style={styles.container}>
                 <View style={styles.button_container}>
                     <Text style={styles.txt_branco}>Tarefas</Text>
                     <View style={styles.button_container2}>
                         <Text style={styles.button_text}>Dark Mode</Text>
                         <Switch
-                            trackColor={{ false: '#5d5d5d', true: '#5d5d5d' }}
-                            thumbColor={isSelected ? '#AF70FF' : '#FFF'}
+                            trackColor={ { false: '#7e4ebb', true: '#7e4ebb' } }
+                            thumbColor={isSelected ? '#abff4f' : '#FFF'}
+                            activeThumbColor={isSelected ? '#abff4f' : '#FFF'}
                             ios_backgroundColor='#3e3e3e'
-                            onValueChange={() => {
+                            onValueChange={ () => {
                                 setSelection(!isSelected)
                                 taskDark(!isSelected)
                             }}
@@ -66,15 +71,15 @@ export default function Home({ navigation, route }) {
 
                 <View style={styles.container_task}>
                     {
-                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa}  dark={tarefa.dark} />) : []
+                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task key={tarefa.id} id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa}  dark={tarefa.dark} />) : []
                     }
                 </View>
 
                 <TouchableOpacity
-                    style={[styles.form_button, { backgroundColor: Theme.bgPrimary }]}
+                    style={ [styles.form_button, { backgroundColor: Theme.bgPrimary }] }
                     onPress={() => navigation.navigate('FormScreen', { theme: Theme, lista: listaTarefas, logo: isSelected ? LogoDark : Logo, dark: isSelected })}>
 
-                    <Text style={[styles.txt_roxo, { color: Theme.textSecondary }]}>Criar Tarefa</Text>
+                    <Text style={ [styles.txt_roxo, { color: Theme.textSecondary }] }>Criar Tarefa</Text>
                     <AntDesign name='plus' size={20} color={Theme.textSecondary} />
 
                 </TouchableOpacity>
