@@ -3,7 +3,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Switch } from 'react-native'
 import Task from '../components/Task'
 import { Dark, Light } from '../../themes/theme';
-
+import Logo from '../../assets/LogoLight.png'
+import LogoDark from '../../assets/Logo.png'
 
 
 export default function Home({ navigation, route }) {
@@ -19,6 +20,12 @@ export default function Home({ navigation, route }) {
         novaLista.pop(listaTarefas.indexOf(value))
         setlistTarefa(novaLista)
     }
+
+    const taskDark = (value) => {
+        const novaLista = [...listaTarefas]
+        novaLista.map( (tarefa) => tarefa.dark = value)
+        setlistTarefa(novaLista)
+    }
     
     useEffect(() => { if (props != undefined) {
 
@@ -27,12 +34,16 @@ export default function Home({ navigation, route }) {
         setlistTarefa(listaNova)
 
     } }, [props])
+    
 
+    useEffect( () => taskDark(isSelected), [isSelected])
+    
     return (
         <SafeAreaView style={[styles.safeArea, {backgroundColor: Theme.bgPrimary}]}>
             <View style={styles.logo_container}>
                 <Image style={styles.logo}
-
+                source={isSelected ? LogoDark : Logo}
+                resizeMode='stretch'
                 />
             </View>
 
@@ -54,14 +65,14 @@ export default function Home({ navigation, route }) {
 
                 <View style={styles.container_task}>
                     {
-                        listaTarefas.length > 0 ? listaTarefas.map((tarefa) => <Task tarefa={tarefa.tarefa} apaga={() => apagaTarefa(tarefa.tarefa)}  id={tarefa.id}/>) : []
+                        listaTarefas.length > 0 ? listaTarefas.map((tarefa) => <Task tarefa={tarefa.tarefa} apaga={() => apagaTarefa(tarefa.tarefa)}  id={tarefa.id} dark={tarefa.dark}/>) : []
                     }
 
                 </View>
 
                 <TouchableOpacity 
                     style={[styles.form_button, {backgroundColor: Theme.bgPrimary}]} 
-                    onPress={ () => navigation.navigate('FormScreen', {theme: Theme, lista: listaTarefas} ) }>
+                    onPress={ () => navigation.navigate('FormScreen', {theme: Theme, lista: listaTarefas, logo: isSelected ? LogoDark : Logo, dark: isSelected} ) }>
 
                         <Text style={[styles.txt_roxo, {color: Theme.textSecondary}]}>Criar Tarefa</Text>
                         <AntDesign name='plus' size={20} color={Theme.textSecondary} />
@@ -84,6 +95,7 @@ const styles = StyleSheet.create({
     logo_container: {
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: 20
     },
 
     button_container: {
@@ -123,8 +135,8 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-        width: 80,
-        height: 45,
+        width: 110,
+        height: 41,
     },
 
     form_button: {

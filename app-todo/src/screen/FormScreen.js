@@ -6,6 +6,8 @@ export default function FormScreen({ navigation, route }) {
     const [tarefa, setTarefa] = useState('')
     const Theme = route.params.theme
     const lista = route.params.lista
+    const logo = route.params.logo
+    const dark = route.params.dark
 
     useEffect(() => { setAviso('') }, [tarefa])
 
@@ -25,7 +27,7 @@ export default function FormScreen({ navigation, route }) {
         <SafeAreaView style={[styles.safeArea, {backgroundColor: Theme.primaryColor}]}>
             <View style={[styles.logo_container, {backgroundColor: Theme.bgPrimary}]}>
                 <Image style={styles.logo}
-
+                    source={logo}
                 />
             </View>
 
@@ -44,7 +46,8 @@ export default function FormScreen({ navigation, route }) {
                         if (tarefa.length != 0) {
                             setTarefa(tarefa), navigation.navigate('Home', {
                                 tarefa: tarefa,
-                                id: geraID(lista)
+                                id: geraID(lista),
+                                dark: dark
                             })
                         } else {
                             setAviso('Tarefa vazia!')
@@ -66,13 +69,14 @@ const styles = StyleSheet.create({
     },
 
     logo_container: {
-        padding: 20,
-        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 20
     },
 
     logo: {
-        width: 80,
-        height: 45,
+        width: 110,
+        height: 41,
     },
 
     form: {

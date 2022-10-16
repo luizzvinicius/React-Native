@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export default function Task({ tarefa, apaga}) {
+export default function Task({ tarefa, apaga, dark = false}) {
+    
     const [isSelected, setSelection] = useState(false)
     const [desabilitado, setDesabilitado] = useState(false)
 
@@ -12,7 +13,7 @@ export default function Task({ tarefa, apaga}) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, dark ? {backgroundColor: '#333333'} : {}]}>
             <View style={styles.checkBox_text}>
                 <Checkbox
                     status={isSelected ? 'checked' : 'unchecked'}
