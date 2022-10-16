@@ -3,10 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Checkbox } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export default function Task({ tarefa, apaga, dark = false}) {
+export default function Task({ tarefa, apaga, dark = false, id}) {
     
     const [isSelected, setSelection] = useState(false)
-    const [desabilitado, setDesabilitado] = useState(false)
 
     const verificaSelecionado = (selecionado) => {
         if (selecionado) return {textDecorationLine: 'line-through'}
@@ -19,14 +18,13 @@ export default function Task({ tarefa, apaga, dark = false}) {
                     status={isSelected ? 'checked' : 'unchecked'}
                     onPress={() => setSelection(!isSelected)}
                     color={'#AF70FF'}
-                    disabled={desabilitado}
                 />
 
                 <Text numberOfLines={1} ellipsizeMode='clip' style={[styles.check_text, verificaSelecionado(isSelected)]}>{tarefa}</Text>
             </View>
 
             <TouchableOpacity
-                onPress={() => {setSelection(true), setDesabilitado(true), apaga(tarefa)}}
+                onPress={() => {apaga(id)}}
             >
                 <MaterialIcons name='delete' size={24} color='#FF6060' />
             </TouchableOpacity>

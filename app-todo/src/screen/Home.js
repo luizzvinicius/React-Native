@@ -7,17 +7,16 @@ import Logo from '../../assets/LogoLight.png'
 import LogoDark from '../../assets/Logo.png'
 
 export default function Home({ navigation, route }) {
+    
     const props = route.params
-
     const [listaTarefas, setlistTarefa] = useState([])
     const [isSelected, setSelection] = useState(false)
 
     const Theme = isSelected ? Dark.colors : Light.colors
 
-    const apagaTarefa = (value) => {
+    const apagaTarefa = (id) => {
         const novaLista = [...listaTarefas]
-        novaLista.pop(listaTarefas.indexOf(value))
-        setlistTarefa(novaLista)
+        setlistTarefa(novaLista.filter( (task) => task.id != id))
     }
 
     const taskDark = (value) => {
@@ -26,17 +25,18 @@ export default function Home({ navigation, route }) {
         setlistTarefa(novaLista)
     }
 
-    useEffect(() => {
-        if (props != undefined) {
-            const listaNova = [...listaTarefas]
-            listaNova.push(props)
-            setlistTarefa(listaNova)
 
-        }
+    useEffect( () => {
+
+        if (props == undefined) return
+        
+        const listaNova = [...listaTarefas]
+        listaNova.push(props)
+        setlistTarefa(listaNova)
+     
     }, [props])
 
-    useEffect(() => taskDark(isSelected), [isSelected])
-
+    
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: Theme.bgPrimary }]}>
             <View style={styles.logo_container}>
@@ -45,7 +45,7 @@ export default function Home({ navigation, route }) {
                     resizeMode='stretch'
                 />
             </View>
-
+            {console.log('renderizou')}
             <View style={styles.container}>
                 <View style={styles.button_container}>
                     <Text style={styles.txt_branco}>Tarefas</Text>
@@ -55,7 +55,10 @@ export default function Home({ navigation, route }) {
                             trackColor={{ false: '#5d5d5d', true: '#5d5d5d' }}
                             thumbColor={isSelected ? '#AF70FF' : '#FFF'}
                             ios_backgroundColor='#3e3e3e'
-                            onValueChange={() => setSelection(!isSelected)}
+                            onValueChange={() => {
+                                setSelection(!isSelected)
+                                taskDark(!isSelected)
+                            }}
                             value={isSelected}
                         />
                     </View>
@@ -63,7 +66,7 @@ export default function Home({ navigation, route }) {
 
                 <View style={styles.container_task}>
                     {
-                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task tarefa={tarefa.tarefa} apaga={() => apagaTarefa(tarefa.tarefa)} id={tarefa.id} dark={tarefa.dark} />) : []
+                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa}  dark={tarefa.dark} />) : []
                     }
                 </View>
 
