@@ -3,9 +3,10 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TextInput, TouchableOpacit
 
 export default function FormScreen({ navigation, route }) {
     const [aviso, setAviso] = useState('')
-    const [tarefa, setTarefa] = useState('')
+    const [tarefa, setTarefa] = useState(route.params.tarefa !== undefined ? route.params.tarefa : '')
 
-    const { theme, lista, logo, dark } = route.params
+    const { theme, lista, logo, dark, func } = route.params
+
 
     useEffect(() => { setAviso('') }, [tarefa])
 
@@ -15,11 +16,11 @@ export default function FormScreen({ navigation, route }) {
 
         let maiorIndice = 0
 
-        lista.map((card) => maiorIndice = Math.max(card.id, maiorIndice))
+        lista.map( card => maiorIndice = Math.max(card.id, maiorIndice))
 
         return maiorIndice + 1
     }
-
+   
     return (
         <SafeAreaView style={ [styles.safeArea, { backgroundColor: theme.primaryColor }] }>
             <View style={ [styles.logo_container, { backgroundColor: theme.bgPrimary }] }>
@@ -27,9 +28,8 @@ export default function FormScreen({ navigation, route }) {
                     source={logo}
                 />
             </View>
-
             <View style={styles.form}>
-                <Text style={ [styles.form_titulo, {color: theme.bgPrimary}] }>Criar Tarefa</Text>
+                <Text style={ [styles.form_titulo, {color: theme.bgPrimary}] }>{func} Tarefa</Text>
 
                 <TextInput style={[styles.input, { backgroundColor: theme.bgPrimary }]}
                     onChangeText={setTarefa}
@@ -43,13 +43,14 @@ export default function FormScreen({ navigation, route }) {
                         if (tarefa.length == 0) return setAviso('Tarefa vazia!') 
                         
                         setTarefa(tarefa), navigation.navigate('Home', {
-                            id: geraID(lista),
+                            id: func === 'Criar' ? geraID(lista) : route.params.id,
                             tarefa: tarefa,
-                            dark: dark
+                            dark: dark,
+                            func: func
                         })
                     }}>
 
-                    <Text style={ [styles.button_text, {color: theme.bgPrimary}] }>Criar</Text>
+                    <Text style={ [styles.button_text, {color: theme.bgPrimary}] }>{func}</Text>
                 </TouchableOpacity>
 
             </View>

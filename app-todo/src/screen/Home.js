@@ -7,36 +7,43 @@ import Logo from '../../assets/LogoLight.png'
 import LogoDark from '../../assets/Logo.png'
 
 export default function Home({ navigation, route }) {
-    
+
     const props = route.params
     const [listaTarefas, setlistTarefa] = useState([])
     const [isSelected, setSelection] = useState(false)
-
     const Theme = isSelected ? Dark.colors : Light.colors
 
     const apagaTarefa = (id) => {
-        setlistTarefa(
-            [...listaTarefas]
-            .filter( (task) => task.id != id)
-            )
+        setlistTarefa( [...listaTarefas].filter( task => task.id != id) )
     }
 
     const taskDark = (value) => {
+        
         const ListaDark = [...listaTarefas]
-
-        ListaDark.map(tarefa => tarefa.dark = value)
-
+        ListaDark.map( tarefa => tarefa.dark = value)
         setlistTarefa( ListaDark )
+
     }
 
+    const editTarefa = (id, newValue) => {
+
+       const novaLista =  [...listaTarefas]
+        novaLista.map( tarefa => tarefa.id === id ? tarefa.tarefa = newValue : '')
+        setlistTarefa( novaLista )
+
+    }
+
+    const criarTarefa = () => {
+        const listaNova = [...listaTarefas]
+        listaNova.push(props)
+        setlistTarefa(listaNova)
+    }
 
     useEffect( () => {
 
         if (props == undefined) return
+        props.func === 'Criar' ? criarTarefa() : editTarefa(props.id, props.tarefa) 
         
-        const listaNova = [...listaTarefas]
-        listaNova.push(props)
-        setlistTarefa(listaNova)
      
     }, [props])
 
@@ -46,7 +53,6 @@ export default function Home({ navigation, route }) {
             <View style={styles.logo_container}>
                 <Image style={styles.logo}
                     source={isSelected ? LogoDark : Logo}
-                    resizeMode='stretch'
                 />
             </View>
 
@@ -68,16 +74,28 @@ export default function Home({ navigation, route }) {
                         />
                     </View>
                 </View>
-
+                
                 <View style={styles.container_task}>
                     {
-                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => <Task key={tarefa.id} id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa}  dark={tarefa.dark} />) : []
+                        listaTarefas.length > 0 ? listaTarefas.map(tarefa => 
+
+                            <Task key={tarefa.id} id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa}  dark={tarefa.dark} navigation={navigation} 
+                            dados={
+                                { 
+                                    theme: Theme, 
+                                    lista: listaTarefas, 
+                                    logo: isSelected ? LogoDark : Logo, 
+                                    dark: isSelected, 
+                                    func: 'Editar'
+                                }
+                            }/>
+                                                                ) : []
                     }
                 </View>
 
                 <TouchableOpacity
                     style={ [styles.form_button, { backgroundColor: Theme.bgPrimary }] }
-                    onPress={() => navigation.navigate('FormScreen', { theme: Theme, lista: listaTarefas, logo: isSelected ? LogoDark : Logo, dark: isSelected })}>
+                    onPress={() => navigation.navigate('FormScreen', { theme: Theme, lista: listaTarefas, logo: isSelected ? LogoDark : Logo, dark: isSelected, func: 'Criar' })}>
 
                     <Text style={ [styles.txt_roxo, { color: Theme.textSecondary }] }>Criar Tarefa</Text>
                     <AntDesign name='plus' size={20} color={Theme.textSecondary} />
