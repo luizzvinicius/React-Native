@@ -11,7 +11,6 @@ export default function FormScreen({ navigation, route }) {
     useEffect(() => { setAviso('') }, [tarefa])
 
     const geraID = (lista) => {
-
         if (!lista) return 0
 
         let maiorIndice = 0

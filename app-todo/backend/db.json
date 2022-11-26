@@ -1,0 +1,13 @@
+{
+  "tarefas": [
+    {
+      "id": 1,
+      "tarefa": "nada",
+      "func": "Criar",
+      "dark": false
+    },
+    {
+      "id": 2
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "back_to_do_app",
+  "version": "1.0.0",
+  "description": "idk",
+  "main": "back.js",
+  "scripts": {
+    "start": "json-server --watch db.json"
+  },
+  "author": "luiz and zig",
+  "license": "MIT"
+}
