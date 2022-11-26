@@ -30,7 +30,7 @@ export default function Task({ tarefa, apaga, dark = false, id, navigation, dado
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { apaga(id) }}
+                    onPress={() => apaga(id)}
                 >
                     <MaterialIcons name='delete' size={24} color='#FF6060' />
                 </TouchableOpacity>

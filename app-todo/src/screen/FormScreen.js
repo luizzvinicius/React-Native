@@ -51,7 +51,6 @@ export default function FormScreen({ navigation, route }) {
 
                     <Text style={ [styles.button_text, {color: theme.bgPrimary}] }>{func}</Text>
                 </TouchableOpacity>
-
             </View>
         </SafeAreaView>
     )

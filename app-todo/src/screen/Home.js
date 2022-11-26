@@ -13,11 +13,10 @@ export default function Home({ navigation, route }) {
   const Theme = isSelected ? Dark.colors : Light.colors
 
   const requestTarefa = () => {
-    fetch('http://localhost:3000/tarefas').then(
-      request => request.json().then(tarefa => setlistTarefa(tarefa))
-    ).catch(exception => {
-      console.log(exception)
-    })
+    fetch('http://localhost:3000/tarefas').then(request => request.json().then(tarefa => setlistTarefa(tarefa)))
+    .catch(exception => {
+        console.log(exception)
+      })
   }
 
   const criarTarefa = () => {
@@ -43,19 +42,17 @@ export default function Home({ navigation, route }) {
   }
 
   const apagaTarefa = (id) => {
-    {console.log(listaTarefas)}
-    
-    fetch('http://localhost:3000/tarefas', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(setlistTarefa([...listaTarefas].filter(task => task.id != id)))
-    }).catch(exception => {
+    //setlistTarefa([...listaTarefas].filter(task => task.id != id))
+    const index = listaTarefas.findIndex(tarefa => tarefa.id == id)
+
+    fetch(`http://localhost:3000/tarefas[${index}]`, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' }
+    }).then(
+      response => response.status
+    ).catch(exception => {
       console.log(exception)
     })
-    
   }
 
   const taskDark = (value) => {
@@ -66,8 +63,21 @@ export default function Home({ navigation, route }) {
 
   const editTarefa = (id, newValue) => {
     const novaLista = [...listaTarefas]
-    novaLista.map(tarefa => tarefa.id === id ? tarefa.tarefa = newValue : '')
+    novaLista.map(tarefa => tarefa.id == id ? tarefa.tarefa = newValue : '')
     setlistTarefa(novaLista)
+
+    fetch('http://localhost:3000/tarefas', {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(novaLista)
+    }).then(() =>
+      requestTarefa()
+    ).catch(exception => {
+      console.log(exception)
+    })
   }
 
   useEffect(() => {
@@ -103,8 +113,9 @@ export default function Home({ navigation, route }) {
         </View>
 
         <View style={styles.container_task}>
+
           {
-            listaTarefas.length >= 0 ? listaTarefas.map(tarefa =>
+            listaTarefas.length > 0 ? listaTarefas.map(tarefa =>
 
               <Task key={tarefa.id} id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa} dark={tarefa.dark} navigation={navigation}
                 dados={

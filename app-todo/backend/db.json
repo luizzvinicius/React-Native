@@ -2,12 +2,9 @@
   "tarefas": [
     {
       "id": 1,
-      "tarefa": "nada",
+      "tarefa": "dfcsdf",
       "func": "Criar",
       "dark": false
-    },
-    {
-      "id": 2
     }
   ]
 }
