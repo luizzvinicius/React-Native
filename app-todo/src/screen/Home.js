@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Switch } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Switch, ActivityIndicator } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import Task from '../components/Task'
 import { Dark, Light } from '../../themes/theme'
@@ -10,21 +10,28 @@ export default function Home({ navigation, route }) {
   const props = route.params
   const [listaTarefas, setlistTarefa] = useState([])
   const [isSelected, setSelection] = useState(false)
+  const [isLoading, setisLoading] = useState(true)
   const Theme = isSelected ? Dark.colors : Light.colors
 
   const requestTarefa = () => {
-    fetch('http://localhost:3000/tarefas').then(request => request.json().then(tarefa => setlistTarefa(tarefa)))
-    .catch(exception => {
-        console.log(exception)
-      })
-  }
+    
+    setisLoading(true)
 
+    fetch('http://localhost:3000/tarefas')
+    .then(request => request.json())
+    .then(tarefa => setlistTarefa(tarefa))
+    .catch(exception => console.log(exception))
+    .finally( () =>  setisLoading(false) )
+  }
+  
   const criarTarefa = () => {
+    setisLoading(true)
+
     const novaTarefa = {
-      "id": props.id,
-      "tarefa": props.tarefa,
-      "func": props.func,
-      "dark": props.dark
+      id: props.id,
+      tarefa: props.tarefa,
+      func: props.func,
+      dark: props.dark
     }
 
     fetch('http://localhost:3000/tarefas', {
@@ -34,25 +41,19 @@ export default function Home({ navigation, route }) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(novaTarefa)
-    }).then(() =>
-      requestTarefa()
-    ).catch(exception => {
-      console.log(exception)
     })
+    .then(() => requestTarefa())
+    .catch(exception => console.log(exception))
   }
 
   const apagaTarefa = (id) => {
-    //setlistTarefa([...listaTarefas].filter(task => task.id != id))
-    const index = listaTarefas.findIndex(tarefa => tarefa.id == id)
-
-    fetch(`http://localhost:3000/tarefas[${index}]`, {
+    setisLoading(true)
+    fetch(`http://localhost:3000/tarefas/${id}`, {
       method: 'DELETE',
       headers: { 'Content-type': 'application/json' }
-    }).then(
-      response => response.status
-    ).catch(exception => {
-      console.log(exception)
     })
+    .then( () => requestTarefa())
+    .catch(exception => console.log(exception))
   }
 
   const taskDark = (value) => {
@@ -62,28 +63,34 @@ export default function Home({ navigation, route }) {
   }
 
   const editTarefa = (id, newValue) => {
-    const novaLista = [...listaTarefas]
-    novaLista.map(tarefa => tarefa.id == id ? tarefa.tarefa = newValue : '')
-    setlistTarefa(novaLista)
 
-    fetch('http://localhost:3000/tarefas', {
+    const novaTarefa = {
+      id: props.id,
+      tarefa: newValue,
+      func: props.func,
+      dark: props.dark
+    }
+
+    setisLoading(true)
+
+    fetch(`http://localhost:3000/tarefas/${id}`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(novaLista)
-    }).then(() =>
-      requestTarefa()
-    ).catch(exception => {
-      console.log(exception)
+      body: JSON.stringify(novaTarefa)
     })
+    .then(() => requestTarefa())
+    .catch(exception => console.log(exception))
   }
-
+  
   useEffect(() => {
-    if (props == undefined) return
+    if (props == undefined) return requestTarefa()
     props.func === 'Criar' ? criarTarefa() : editTarefa(props.id, props.tarefa)
   }, [props])
+
+  
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: Theme.bgPrimary }]}>
@@ -113,9 +120,13 @@ export default function Home({ navigation, route }) {
         </View>
 
         <View style={styles.container_task}>
-
+              {isLoading ? 
+              <View style={styles.absolute}>
+                <ActivityIndicator size={'large'} color={Theme.textPrimary}/>
+              </View> 
+              : [] }
           {
-            listaTarefas.length > 0 ? listaTarefas.map(tarefa =>
+            listaTarefas.length >= 0 ? listaTarefas.map(tarefa =>
 
               <Task key={tarefa.id} id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa} dark={tarefa.dark} navigation={navigation}
                 dados={
@@ -140,7 +151,7 @@ export default function Home({ navigation, route }) {
 
         </TouchableOpacity>
       </View>
-      {console.log(listaTarefas)}
+      
     </SafeAreaView>
   )
 }
@@ -213,11 +224,27 @@ const styles = StyleSheet.create({
   },
 
   container_task: {
+    position: 'relative',
     maxHeight: 300,
     paddingVertical: 15,
     marginTop: 10,
     paddingRight: 5,
+    paddingLeft: 5,
     gap: 10,
     overflow: 'scroll',
+    minHeight: 60
   },
+  absolute: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 9999,
+    backgroundColor: '#00000057',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+ 
+  }
 })  
