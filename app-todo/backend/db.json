@@ -2,13 +2,7 @@
   "tarefas": [
     {
       "id": 1,
-      "tarefa": "Matemática",
-      "func": "Editar",
-      "dark": false
-    },
-    {
-      "id": 2,
-      "tarefa": "Geografia",
+      "tarefa": "Corrigir o tema da tarefa",
       "func": "Editar",
       "dark": false
     }

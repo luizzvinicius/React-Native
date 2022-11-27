@@ -14,16 +14,15 @@ export default function Home({ navigation, route }) {
   const Theme = isSelected ? Dark.colors : Light.colors
 
   const requestTarefa = () => {
-    
     setisLoading(true)
 
     fetch('http://localhost:3000/tarefas')
-    .then(request => request.json())
-    .then(tarefa => setlistTarefa(tarefa))
-    .catch(exception => console.log(exception))
-    .finally( () =>  setisLoading(false) )
+      .then(request => request.json())
+      .then(tarefa => setlistTarefa(tarefa))
+      .catch(exception => console.log(exception))
+      .finally(() => setisLoading(false))
   }
-  
+
   const criarTarefa = () => {
     setisLoading(true)
 
@@ -42,28 +41,28 @@ export default function Home({ navigation, route }) {
       },
       body: JSON.stringify(novaTarefa)
     })
-    .then(() => requestTarefa())
-    .catch(exception => console.log(exception))
+      .then(() => requestTarefa())
+      .catch(exception => console.log(exception))
   }
 
   const apagaTarefa = (id) => {
     setisLoading(true)
+
     fetch(`http://localhost:3000/tarefas/${id}`, {
       method: 'DELETE',
       headers: { 'Content-type': 'application/json' }
     })
-    .then( () => requestTarefa())
-    .catch(exception => console.log(exception))
+      .then(() => requestTarefa())
+      .catch(exception => console.log(exception))
   }
 
   const taskDark = (value) => {
-    const ListaDark = [...listaTarefas]
-    ListaDark.map(tarefa => tarefa.dark = value)
-    setlistTarefa(ListaDark)
+    const listaDark = [...listaTarefas]
+    listaDark.map(tarefa => tarefa.dark = value)
+    setlistTarefa(listaDark)
   }
 
   const editTarefa = (id, newValue) => {
-
     const novaTarefa = {
       id: props.id,
       tarefa: newValue,
@@ -81,16 +80,14 @@ export default function Home({ navigation, route }) {
       },
       body: JSON.stringify(novaTarefa)
     })
-    .then(() => requestTarefa())
-    .catch(exception => console.log(exception))
+      .then(() => requestTarefa())
+      .catch(exception => console.log(exception))
   }
-  
+
   useEffect(() => {
     if (props == undefined) return requestTarefa()
     props.func === 'Criar' ? criarTarefa() : editTarefa(props.id, props.tarefa)
   }, [props])
-
-  
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: Theme.bgPrimary }]}>
@@ -120,14 +117,16 @@ export default function Home({ navigation, route }) {
         </View>
 
         <View style={styles.container_task}>
-              {isLoading ? 
-              <View style={styles.absolute}>
-                <ActivityIndicator size={'large'} color={Theme.textPrimary}/>
-              </View> 
-              : [] }
+          {
+            isLoading ?
+            <View style={styles.absolute}>
+              <ActivityIndicator size={'large'} color={Theme.textPrimary} />
+            </View>
+            : []
+          }
+          
           {
             listaTarefas.length >= 0 ? listaTarefas.map(tarefa =>
-
               <Task key={tarefa.id} id={tarefa.id} tarefa={tarefa.tarefa} apaga={apagaTarefa} dark={tarefa.dark} navigation={navigation}
                 dados={
                   {
@@ -137,21 +136,18 @@ export default function Home({ navigation, route }) {
                     dark: isSelected,
                     func: 'Editar'
                   }
-                } />
-            ) : []
+                } />)
+              : []
           }
         </View>
 
-        <TouchableOpacity
-          style={[styles.form_button, { backgroundColor: Theme.bgPrimary }]}
+        <TouchableOpacity style={[styles.form_button, { backgroundColor: Theme.bgPrimary }]}
           onPress={() => navigation.navigate('FormScreen', { theme: Theme, lista: listaTarefas, logo: isSelected ? LogoDark : Logo, dark: isSelected, func: 'Criar' })}>
 
           <Text style={[styles.txt_roxo, { color: Theme.textSecondary }]}>Criar Tarefa</Text>
           <AntDesign name='plus' size={20} color={Theme.textSecondary} />
-
         </TouchableOpacity>
       </View>
-      
     </SafeAreaView>
   )
 }
@@ -234,6 +230,7 @@ const styles = StyleSheet.create({
     overflow: 'scroll',
     minHeight: 60
   },
+
   absolute: {
     width: '100%',
     height: '100%',
@@ -245,6 +242,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
- 
-  }
+  },
 })  
